@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Board</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input, textarea, button {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .post {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+
+        .post:last-child {
+            border-bottom: none;
+        }
+
+        .post h3 {
+            margin: 0 0 5px;
+        }
+
+        .post p {
+            margin: 0 0 10px;
+        }
+
+        .reply {
+            margin-left: 20px;
+            border-left: 2px solid #ddd;
+            padding-left: 10px;
+        }
+
+        .reply-form {
+            margin-left: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Study Board</h1>
+        <p>A place for students to ask and answer questions!</p>
+    </header>
+
+    <main>
+        <section id="new-post">
+            <h2>Create a Post</h2>
+            <form id="postForm">
+                <input type="text" id="title" placeholder="Title" required>
+                <textarea id="content" placeholder="Write your question or discussion topic here..." required></textarea>
+                <button type="submit">Post</button>
+            </form>
+        </section>
+
+        <section id="posts">
+            <h2>Recent Posts</h2>
+            <!-- Posts will appear here -->
+        </section>
+    </main>
+
+    <script>
+        const postForm = document.getElementById('postForm');
+        const postsSection = document.getElementById('posts');
+
+        postForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const title = document.getElementById('title').value;
+            const content = document.getElementById('content').value;
+
+            // Create post element
+            const post = document.createElement('div');
+            post.classList.add('post');
+
+            const postTitle = document.createElement('h3');
+            postTitle.textContent = title;
+
+            const postContent = document.createElement('p');
+            postContent.textContent = content;
+
+            const replySection = document.createElement('div');
+            replySection.classList.add('replies');
+
+            const replyForm = document.createElement('form');
+            replyForm.classList.add('reply-form');
+
+            const replyInput = document.createElement('textarea');
+            replyInput.placeholder = 'Write a reply...';
+            replyInput.required = true;
+
+            const replyButton = document.createElement('button');
+            replyButton.type = 'submit';
+            replyButton.textContent = 'Reply';
+
+            replyForm.appendChild(replyInput);
+            replyForm.appendChild(replyButton);
+
+            replyForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const replyContent = replyInput.value;
+                const reply = document.createElement('div');
+                reply.classList.add('reply');
+                reply.textContent = replyContent;
+
+                replySection.appendChild(reply);
+                replyForm.reset();
+            });
+
+            post.appendChild(postTitle);
+            post.appendChild(postContent);
+            post.appendChild(replySection);
+            post.appendChild(replyForm);
+
+            postsSection.appendChild(post);
+
+            // Clear the form
+            postForm.reset();
+        });
+    </script>
+</body>
+</html>
